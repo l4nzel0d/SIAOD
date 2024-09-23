@@ -35,7 +35,7 @@ public:
     Hash_Table(int table_size);
     ~Hash_Table();
 
-    int insert(int id, const string& name, const string& address);
+    void insert(int id, const string& name, const string& address);
     Data_Record* search(int id);
     int remove(int id);
     void display() const;

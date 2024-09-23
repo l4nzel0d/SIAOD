@@ -64,7 +64,7 @@ void Hash_Table::rehash()
 }
 
 
-int Hash_Table::insert(int id, const string& name, const string& address)
+void Hash_Table::insert(int id, const string& name, const string& address)
 {
     int index = hash_function(id);
     Data_Record* new_record = new Data_Record(id, name, address);
