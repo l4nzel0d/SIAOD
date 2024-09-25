@@ -20,7 +20,6 @@ void clear_cin()
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
-
 int get_id_from_user()
 {
     int id;
@@ -36,7 +35,6 @@ int get_id_from_user()
         cout << "Invalid id\n";
     }
 }
-
 
 string get_string_from_user(string prompt)
 {
@@ -84,6 +82,12 @@ void search()
 
 };
 
+void display()
+{
+    cout << "Displaying all records: " << endl;
+    library.display();
+}
+
 int main()
 {
     setlocale(LC_ALL, "ru_RU.UTF-8");
@@ -103,11 +107,9 @@ int main()
             cout << "0: Exit" << endl;
             cout << "\tCommand Code: ";
             if (cin >> cmd && cmd >= 0 && cmd <= 4) break;
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            clear_cin();
             cout << "Invalid Command Code\n";
         }
-
 
         switch(cmd)
         {
@@ -124,7 +126,7 @@ int main()
                 search();
                 break;
             case 4: 
-                library.display();
+                display();
                 break;
         }
     }
