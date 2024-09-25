@@ -1,5 +1,14 @@
 #include "Hash_Table.h"
 
+string Data_Record::string_rep()
+{
+    string output = "";
+    output += "[номер читательского билета: " + to_string(id)
+        + ", ФИО: " + name
+        + ", Адрес: " + address + "]";
+    return output;
+}
+
 Hash_Table::Hash_Table(int table_size) : size(table_size), num_of_elements(0)
 {
     table = new Data_Record*[size];
@@ -64,11 +73,9 @@ void Hash_Table::rehash()
 }
 
 
-void Hash_Table::insert(int id, const string& name, const string& address)
+void Hash_Table::insert(Data_Record* new_record)
 {
-    int index = hash_function(id);
-    Data_Record* new_record = new Data_Record(id, name, address);
-
+    int index = hash_function(new_record->id);
     new_record->next = table[index];
     table[index] = new_record;
 
@@ -127,20 +134,24 @@ int Hash_Table::remove(int id)
 
 void Hash_Table::display() const
 {
+    bool empty_flag = true;
     for (int i = 0; i < size; i++)
     {
         Data_Record* current = table[i];
         if (current != nullptr)
         {
+            empty_flag = false;
             cout << "Index " << i << ": ";
             while (current != nullptr)
             {
-                cout << " [номер читательского билета: " << current->id
-                     << ", ФИО: " << current->name
-                     << ", Адрес: " << current->address << "] ";
+                cout << current->string_rep() << endl;
                 current = current->next;
             }
             cout << endl;
         }
+    }
+    if (empty_flag)
+    {
+        cout << "No data" << endl;
     }
 }

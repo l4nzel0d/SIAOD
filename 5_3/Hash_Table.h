@@ -18,6 +18,8 @@ struct Data_Record
     // Constructor
     Data_Record(int id_value, const string name_value, const string address_value) 
                 : id(id_value), name(name_value), address(address_value), next(nullptr) {}
+
+    string string_rep();
 };
 
 class Hash_Table
@@ -35,7 +37,7 @@ public:
     Hash_Table(int table_size);
     ~Hash_Table();
 
-    void insert(int id, const string& name, const string& address);
+    void insert(Data_Record* new_record);
     Data_Record* search(int id);
     int remove(int id);
     void display() const;
