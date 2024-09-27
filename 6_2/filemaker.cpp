@@ -5,23 +5,9 @@
 
 using namespace std;
 
-int main() {
-    string filename;
-    int numChars;
+string LAST_LINE = "I'm going back to 505";
 
-    // Prompt user for filename and number of characters
-    cout << "Enter the name of the file to create (with .txt extension): ";
-    getline(cin, filename);
-
-    cout << "Enter the number of random ASCII characters to generate: ";
-    cin >> numChars;
-
-    // Validate input
-    if (numChars <= 0) {
-        cout << "Please enter a positive number." << endl;
-        return 1;
-    }
-
+void createRandomFile(const string& filename, int numChars) {
     // Seed the random number generator
     srand(static_cast<unsigned int>(time(0)));
 
@@ -29,7 +15,7 @@ int main() {
     ofstream outFile(filename);
     if (!outFile) {
         cout << "Error creating the file: " << filename << endl;
-        return 1;
+        return;
     }
 
     // Generate and write random ASCII characters (printable range: 32-126)
@@ -37,10 +23,23 @@ int main() {
         char randomChar = static_cast<char>(rand() % 95 + 32); // Printable ASCII characters (32-126)
         outFile << randomChar;
     }
-    outFile << "\nSUBSTR";
+    outFile << "\n" << LAST_LINE;
     // Close the file
     outFile.close();
-    cout << "File " << filename << " created with " << numChars << " random printable ASCII characters." << endl;
+    cout << "File " << filename << " created with " << numChars + LAST_LINE.length() << " random printable ASCII characters + LAST LINE." << endl;
+}
+
+int main() {
+    // Array of file names and their respective character counts
+    const int numFiles = 5;
+    const string filenames[numFiles] = { "100.txt", "1000.txt", "10000.txt", "100000.txt", "1000000.txt" };
+    const int charCounts[numFiles] = { 100, 1000, 10000, 100000, 1000000 };
+
+    cout << "LAST_LINE = " << LAST_LINE << endl;
+    // Create the files
+    for (int i = 0; i < numFiles; ++i) {
+        createRandomFile(filenames[i], charCounts[i]);
+    }
 
     return 0;
 }

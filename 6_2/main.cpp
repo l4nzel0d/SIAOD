@@ -8,6 +8,7 @@ using namespace std;
 
 int NOT_FOUND_INDEX = -1;
 const int ALPHABET_SIZE = 256;
+int COMPARISONS = 0;
 
 // Search for the FIRST occurence of needle in haystack
 int linear_search(const string& haystack, const string& needle)
@@ -28,8 +29,10 @@ int linear_search(const string& haystack, const string& needle)
         int j = 0;
         while (j < ln && haystack[i + j] == needle[j]) 
         {
+            COMPARISONS++;
             j++;
         }
+        COMPARISONS++;
 
         // Succesful search
         if (j == ln) return i; 
@@ -75,8 +78,10 @@ int bmh_search(const string& haystack, const string& needle)
 
         while (j >= 0 && haystack[i+j] == needle[j])
         {
+            COMPARISONS++;
             j--;
         }
+        COMPARISONS++;
 
         if (j < 0) last_occurence_index = i;
         // Determine shift
@@ -155,6 +160,7 @@ int main()
     auto end_time = chrono::high_resolution_clock::now();   
     auto time_delta = chrono::duration_cast<chrono::microseconds>(end_time - start_time);
     cout << "Search completed in " << time_delta.count() << " microseconds" << endl;
+    cout << "Total number of comparisons made " << COMPARISONS << endl;
     cout << "Needle: \"" << needle << "\"";
     if (found_index == NOT_FOUND_INDEX)
     {
