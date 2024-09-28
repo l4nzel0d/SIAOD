@@ -112,7 +112,7 @@ int main()
     getline(cin, filename);
 
     // Opening file
-    ifstream file(filename);
+    ifstream file("files/" + filename);
     if (!file.is_open()) // If failed to open
     {
         cout << "Couldn't open file: " << filename << endl;
@@ -161,6 +161,7 @@ int main()
     auto time_delta = chrono::duration_cast<chrono::microseconds>(end_time - start_time);
     cout << "Search completed in " << time_delta.count() << " microseconds" << endl;
     cout << "Total number of comparisons made " << COMPARISONS << endl;
+    cout << "in a file of " << haystack.length() << " characters" << endl;
     cout << "Needle: \"" << needle << "\"";
     if (found_index == NOT_FOUND_INDEX)
     {
