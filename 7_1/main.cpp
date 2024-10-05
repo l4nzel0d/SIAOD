@@ -74,6 +74,15 @@ void print_tree_height()
 {
     cout << "Tree Height = " << rbtree.findHeight();
 }
+void find()
+{
+    cout << "||| Searching Operation |||" << endl;
+    DATA_TYPE key = get_key<DATA_TYPE>("Enter value to find: ");    
+    if (rbtree.search(key))
+        cout << "Successfully found " << key << " in the tree.\n";
+    else
+        cout << key << " was not found in the tree.\n";
+}
 
 // Driver program to test Red-Black Tree
 int main()
@@ -93,9 +102,10 @@ int main()
             cout << "4: Level-Order print" << endl;
             cout << "5: Sum of all leaf nodes" << endl;
             cout << "6: Print Tree Height" << endl;
+            cout << "7: Find" << endl;
             cout << "0: Exit" << endl;
             cout << "\tCommand Code: ";
-            if (cin >> cmd && cmd >= 0 && cmd <= 6) break;
+            if (cin >> cmd && cmd >= 0 && cmd <= 7) break;
             clear_cin();
             cout << "Invalid Command Code\n";
         }
@@ -123,6 +133,9 @@ int main()
                 break;
             case 6:
                 print_tree_height();
+                break;
+            case 7:
+                find();
                 break;
         }
     }

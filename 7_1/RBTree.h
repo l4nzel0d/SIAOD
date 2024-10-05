@@ -56,6 +56,7 @@ public:
     void printLevelOrder();
     int findHeight();
     int findLeafSum();
+    bool search(T key);
 };
 
 #include "RBTree.cpp" // Include implementation file

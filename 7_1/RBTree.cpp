@@ -277,3 +277,20 @@ template <typename T>
 bool RedBlackTree<T>::isLeafNode(Node* node) {
     return node != nullptr && node->left == nullptr && node->right == nullptr;
 }
+
+template <typename T>
+bool RedBlackTree<T>::search(T key)
+{
+    Node* current = root;
+    while (current != nullptr)
+    {
+        if (current->data == key)
+            return true;
+        else if (key < current->data)
+            current = current->left;
+        else
+            current = current->right;
+    }
+
+    return false;
+}
