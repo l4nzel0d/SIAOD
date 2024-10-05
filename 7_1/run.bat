@@ -1,0 +1,1 @@
+g++ main.cpp RBTree.h -o main && .\main

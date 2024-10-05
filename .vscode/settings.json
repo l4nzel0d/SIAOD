@@ -58,12 +58,10 @@
   "C_Cpp_Runner.showCompilationTime": false,
   "C_Cpp_Runner.useLinkTimeOptimization": false,
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
-
-  //
-    "code-runner.executorMap": {
-      "cpp": "g++ main.cpp Hash_Table.cpp -o main && .\\main"
-  },
   "code-runner.runInTerminal": true,
-  "code-runner.clearPreviousOutput": true
-
+  "code-runner.clearPreviousOutput": true,
+  "files.associations": {
+    "ostream": "cpp",
+    "iostream": "cpp"
+  }
 }
