@@ -1,9 +1,10 @@
 #include "RBTree.h"
 #include <limits>
 
-// Initializing empty Red-Black Tree
+// Defining what type of data is in nodes of the tree
 #define DATA_TYPE int
 
+// Initializing empty Red-Black Tree
 RedBlackTree<DATA_TYPE> rbtree;
 
 // Utility function for correctly clearing input stream
@@ -12,7 +13,6 @@ void clear_cin()
     cin.clear();
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
-
 void add_initial_nodes()
 {
     rbtree.insert(13);
@@ -51,50 +51,16 @@ void insert()
     rbtree.insert(key);
     cout << "Insertion complete." << endl;
 }
-
-void del()
-{
-    cout << "||| Deletion Operation |||" << endl;
-    DATA_TYPE key = get_key<DATA_TYPE>("Enter value to delete: ");
-    int completion_code = rbtree.remove(key);
-    if (completion_code == 0)
-    { 
-        cout << "Succesfully deleted node with value: " << key << endl;
-    }
-    else
-    {
-        cout << "Node with value: " << key << " wasn't found in the tree" << endl;
-    }
-    cout << "Deletion complete." << endl;
-}
-void search() 
-{
-    cout << "||| Search Operation |||" << endl;
-    DATA_TYPE key = get_key<DATA_TYPE>("Enter value to find: ");
-    bool success_code = rbtree.search_success(key);
-    if (success_code == 1)
-    { 
-        cout << "Succesfully found node in a tree" << endl;
-    }
-    else
-    {
-        cout << "Node with value: " << key << " wasn't found in the tree" << endl;
-    } 
-}
-
-
 void display_as_tree()
 {
     cout << "Displaying Red-Black-Tree: ";
     rbtree.print2D();
 }
-
 void in_order_print() 
 {
     cout << "In-Order Print: ";
     rbtree.printInOrder();
 }
-
 void level_order_print() 
 {
     cout << "Level-Order Print: ";
@@ -121,17 +87,15 @@ int main()
         while (true)
         {
             cout << "\n\n\t-- Enter Your Command Code --" << endl;
-            cout << "1: Insert" << endl;
-            cout << "2: Delete" << endl;
-            cout << "3: Search" << endl;
-            cout << "4: Display as a tree" << endl;
-            cout << "5: In-Order print" << endl;
-            cout << "6: Level-Order print" << endl;
-            cout << "7: Sum of all leaf nodes" << endl;
-            cout << "8: Print Tree Height" << endl;
+            cout << "1: Insert Node" << endl;
+            cout << "2: Display as a tree" << endl;
+            cout << "3: In-Order print" << endl;
+            cout << "4: Level-Order print" << endl;
+            cout << "5: Sum of all leaf nodes" << endl;
+            cout << "6: Print Tree Height" << endl;
             cout << "0: Exit" << endl;
             cout << "\tCommand Code: ";
-            if (cin >> cmd && cmd >= 0 && cmd <= 8) break;
+            if (cin >> cmd && cmd >= 0 && cmd <= 6) break;
             clear_cin();
             cout << "Invalid Command Code\n";
         }
@@ -146,24 +110,18 @@ int main()
                 insert();
                 break;
             case 2:
-                del();
-                break;
-            case 3:
-                search();
-                break;
-            case 4:
                 display_as_tree();
                 break;
-            case 5:
+            case 3:
                 in_order_print();
                 break;
-            case 6:
+            case 4:
                 level_order_print();
                 break;
-            case 7:
+            case 5:
                 sum_of_all_leaf_nodes();
                 break;
-            case 8:
+            case 6:
                 print_tree_height();
                 break;
         }

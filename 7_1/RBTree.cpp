@@ -98,90 +98,6 @@ void RedBlackTree<T>::fixInsert(Node*& node) {
     root->color = BLACK;
 }
 
-// Utility function: Fixing Deletion Violation
-template <typename T>
-void RedBlackTree<T>::fixDelete(Node*& node) {
-    while (node != root && node->color == BLACK) {
-        if (node == node->parent->left) {
-            Node* sibling = node->parent->right;
-            if (sibling->color == RED) {
-                sibling->color = BLACK;
-                node->parent->color = RED;
-                rotateLeft(node->parent);
-                sibling = node->parent->right;
-            }
-            if ((sibling->left == nullptr || sibling->left->color == BLACK) &&
-                (sibling->right == nullptr || sibling->right->color == BLACK)) {
-                sibling->color = RED;
-                node = node->parent;
-            } else {
-                if (sibling->right == nullptr || sibling->right->color == BLACK) {
-                    if (sibling->left != nullptr)
-                        sibling->left->color = BLACK;
-                    sibling->color = RED;
-                    rotateRight(sibling);
-                    sibling = node->parent->right;
-                }
-                sibling->color = node->parent->color;
-                node->parent->color = BLACK;
-                if (sibling->right != nullptr)
-                    sibling->right->color = BLACK;
-                rotateLeft(node->parent);
-                node = root;
-            }
-        } else {
-            Node* sibling = node->parent->left;
-            if (sibling->color == RED) {
-                sibling->color = BLACK;
-                node->parent->color = RED;
-                rotateRight(node->parent);
-                sibling = node->parent->left;
-            }
-            if ((sibling->left == nullptr || sibling->left->color == BLACK) &&
-                (sibling->right == nullptr || sibling->right->color == BLACK)) {
-                sibling->color = RED;
-                node = node->parent;
-            } else {
-                if (sibling->left == nullptr || sibling->left->color == BLACK) {
-                    if (sibling->right != nullptr)
-                        sibling->right->color = BLACK;
-                    sibling->color = RED;
-                    rotateLeft(sibling);
-                    sibling = node->parent->left;
-                }
-                sibling->color = node->parent->color;
-                node->parent->color = BLACK;
-                if (sibling->left != nullptr)
-                    sibling->left->color = BLACK;
-                rotateRight(node->parent);
-                node = root;
-            }
-        }
-    }
-    node->color = BLACK;
-}
-
-// Utility function: Find Node with Minimum Value
-template <typename T>
-typename RedBlackTree<T>::Node* RedBlackTree<T>::minValueNode(Node*& node) {
-    Node* current = node;
-    while (current->left != nullptr)
-        current = current->left;
-    return current;
-}
-
-// Utility function: Transplant nodes in Red-Black Tree
-template <typename T>
-void RedBlackTree<T>::transplant(Node*& root, Node*& u, Node*& v) {
-    if (u->parent == nullptr)
-        root = v;
-    else if (u == u->parent->left)
-        u->parent->left = v;
-    else
-        u->parent->right = v;
-    if (v != nullptr)
-        v->parent = u->parent;
-}
 
 // Utility function: Helper to print Red-Black Tree
 template <typename T>
@@ -235,89 +151,6 @@ void RedBlackTree<T>::insert(T key) {
         y->right = newNode;
 
     fixInsert(newNode);
-}
-
-template <typename T>
-typename RedBlackTree<T>::Node* RedBlackTree<T>::search(T key)
-{
-    Node* current = root;
-    while (current != nullptr)
-    {
-        if (key < current->data)
-            current = current->left;
-        else if (key > current->data)
-            current = current->right;
-        else
-            break;
-    }
-    return current; 
-}
-
-template <typename T>
-bool RedBlackTree<T>::search_success(T key)
-{
-    return search(key) != nullptr;
-}
-
-// Public function: Remove a key from the Red-Black Tree
-template <typename T>
-int RedBlackTree<T>::remove(T key) 
-{
-    Node* node = root;
-    Node* z = nullptr;
-    Node* x = nullptr;
-    Node* y = nullptr;
-    while (node != nullptr) {
-        if (node->data == key) {
-            z = node;
-        }
-
-        if (node->data <= key) {
-            node = node->right;
-        }
-        else {
-            node = node->left;
-        }
-    }
-
-    if (z == nullptr) {
-        cout << "Key not found in the tree" << endl;
-        return 1;
-    }
-
-    y = z;
-    Color yOriginalColor = y->color;
-    if (z->left == nullptr) {
-        x = z->right;
-        transplant(root, z, z->right);
-    }
-    else if (z->right == nullptr) {
-        x = z->left;
-        transplant(root, z, z->left);
-    }
-    else {
-        y = minValueNode(z->right);
-        yOriginalColor = y->color;
-        x = y->right;
-        if (y->parent == z) {
-            if (x != nullptr)
-                x->parent = y;
-        }
-        else {
-            transplant(root, y, y->right);
-            y->right = z->right;
-            y->right->parent = y;
-        }
-        transplant(root, z, y);
-        y->left = z->left;
-        y->left->parent = y;
-        y->color = z->color;
-    }
-    delete z;
-    if (yOriginalColor == BLACK) {
-        fixDelete(x);
-    }
-    return 0;
 }
 
 
@@ -419,7 +252,7 @@ int RedBlackTree<T>::findHeight() {
 // Utility function: Helper for height calculation
 template <typename T>
 int RedBlackTree<T>::findHeight(Node* node) {
-    if (node == nullptr) return 0;
+    if (node == nullptr) return -1;
     int leftHeight = findHeight(node->left);
     int rightHeight = findHeight(node->right);
     return max(leftHeight, rightHeight) + 1;

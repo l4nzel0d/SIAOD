@@ -32,9 +32,6 @@ private:
     void rotateLeft(Node*& node);
     void rotateRight(Node*& node);
     void fixInsert(Node*& node);
-    void fixDelete(Node*& node);
-    Node* minValueNode(Node*& node);
-    void transplant(Node*& root, Node*& u, Node*& v);
     void printHelper(Node* root, string indent, bool last);
     void deleteTree(Node* node);
     string nodeToString(Node* node);
@@ -44,7 +41,6 @@ private:
     int findLeafSum(Node* node);
     bool isLeafNode(Node* node);
     void print2DUtil(Node* root, int space);
-    Node* search(T key);
 
 public:
     // Constructor and Destructor
@@ -53,8 +49,7 @@ public:
 
     // Public member functions
     void insert(T key);
-    int remove(T key);
-    bool search_success(T key);
+    void remove(T key);
     void printTree();
     void print2D();
     void printInOrder();

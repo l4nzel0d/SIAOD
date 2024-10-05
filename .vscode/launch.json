@@ -7,9 +7,9 @@
       "request": "launch",
       "args": [],
       "stopAtEntry": false,
-      "externalConsole": true,
-      "cwd": "d:/Boris/Documents/UNI/SIAOD/5_1",
-      "program": "d:/Boris/Documents/UNI/SIAOD/5_1/build/Debug/outDebug",
+      "externalConsole": false,
+      "cwd": "D:/Boris/Documents/UNI/SIAOD/7_1", // Set the working directory to the location of main.exe
+      "program": "D:/Boris/Documents/UNI/SIAOD/7_1/main", // Path to the executable
       "MIMode": "gdb",
       "miDebuggerPath": "D:/Program Files/MSYS2/ucrt64/bin/gdb.exe",
       "setupCommands": [
