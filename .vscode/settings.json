@@ -62,6 +62,8 @@
   "code-runner.clearPreviousOutput": true,
   "files.associations": {
     "ostream": "cpp",
-    "iostream": "cpp"
+    "iostream": "cpp",
+    "cstdint": "cpp",
+    "limits": "cpp"
   }
 }
