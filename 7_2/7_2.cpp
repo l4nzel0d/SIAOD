@@ -1,15 +1,8 @@
-//
-//  main.cpp
-//  Kruskal's Algorithm with Graph Visualization
-//
-//  Created by Himanshu on 28/05/23.
-//
-
 #include <iostream>
 #include <vector>
 #include <algorithm>
 #include <fstream>
-#include <cstdlib> // For system() function
+#include <cstdlib> 
 #include <limits>
 using namespace std;
 
@@ -40,7 +33,7 @@ bool connected(int p, int q, int id[]) {
 }
 
 // Union operation of DSU
-void unionSet(int p, int q, int *id) {
+void unionSet(int p, int q, int id[]) {
     int i = getRoot(p, id);
     int j = getRoot(q, id);
     id[i] = j;
@@ -82,7 +75,7 @@ void generateGraphPNG(const vector<Edge>& edges, const string& filename) {
     string dotFileName = filename + ".dot";
     string outputImageFileName = filename + ".png";
     ofstream file(dotFileName);
-    
+
     // Write the header for the DOT file
     file << "graph G {" << endl;
 
