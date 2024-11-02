@@ -73,6 +73,46 @@ string decodeText(const string& encodedText, map<string, char>& decodingMap) {
     return decodedText;
 }
 
+void writeBinaryFile(const string& filename, const string& bitString) {
+    ofstream outputFile(filename, ios::binary);
+    if (!outputFile) {
+        cerr << "Error opening output file." << endl;
+        return;
+    }
+
+    for (size_t i = 0; i < bitString.size(); i += 8) {
+        bitset<8> byte(bitString.substr(i, 8));
+        outputFile.put(static_cast<char>(byte.to_ulong()));
+    }
+    outputFile.close();
+}
+
+string readBinaryFile(const string& filename) {
+    ifstream inputFile(filename, ios::binary);
+    if (!inputFile) {
+        cerr << "Error opening input file." << endl;
+        return "";
+    }
+
+    string bitString;
+    char byte;
+    while (inputFile.get(byte)) {
+        bitset<8> bits(byte);
+        bitString += bits.to_string();
+    }
+
+    inputFile.close();
+    return bitString;
+}
+
+size_t getFileSize(const string& filename) {
+    ifstream file(filename, ios::binary | ios::ate);
+    return file.tellg();
+}
+
+double calculateCompressionRatio(const string& inputFilename, const string& encodedFilename) {
+    return static_cast<double>(getFileSize(inputFilename)) / getFileSize(encodedFilename);
+}
 
 int main() {
     string inputText;
@@ -102,6 +142,8 @@ int main() {
 
     map<char, string> encodingMap;
     map<string, char> decodingMap;
+
+
     for (const auto& symbol : symbols) {
         encodingMap[symbol.character] = symbol.code;
         decodingMap[symbol.code] = symbol.character;
@@ -109,16 +151,19 @@ int main() {
 
     string encodedText = encodeText(inputText, encodingMap);
 
-    string decodedText = decodeText(encodedText, decodingMap);
-
+    writeBinaryFile("encoded.bin", encodedText);
     ofstream encodedFile("encoded.txt");
     encodedFile << encodedText;
     encodedFile.close();
+
+    string readEncodedText = readBinaryFile("encoded.bin");
+    string decodedText = decodeText(readEncodedText, decodingMap);
 
     ofstream decodedFile("decoded.txt");
     decodedFile << decodedText;
     decodedFile.close();
 
-
+    double compressionRatio = calculateCompressionRatio("input.txt", "encoded.bin");
+    cout << "Compression ratio: " << compressionRatio << endl;
     return 0;
 }
