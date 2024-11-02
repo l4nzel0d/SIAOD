@@ -157,7 +157,7 @@ int main() {
     encodedFile.close();
 
     string readEncodedText = readBinaryFile("encoded.bin");
-    string decodedText = decodeText(readEncodedText, decodingMap);
+    string decodedText = decodeText(encodedText, decodingMap);
 
     ofstream decodedFile("decoded.txt");
     decodedFile << decodedText;
