@@ -76,19 +76,14 @@ wstring encodeText(const wstring& text, map<wchar_t, wstring>& huffmanCodes) {
     return encodedText;
 }
 
-wstring decodeText(Node* root, const wstring& encodedText) {
+wstring decodeText(const wstring& encodedText, map<wstring, wchar_t>& reverseHuffmanCodes) {
     wstring decodedText = L"";
-    Node* currentNode = root;
+    wstring codeBuffer = L"";
     for (wchar_t bit : encodedText) {
-        if (bit == L'0') {
-            currentNode = currentNode->left;
-        } else {
-            currentNode = currentNode->right;
-        }
-
-        if (!currentNode->left && !currentNode-> right) {
-            decodedText += currentNode->character;
-            currentNode = root;
+        codeBuffer += bit;
+        if (reverseHuffmanCodes.find(codeBuffer) != reverseHuffmanCodes.end()) {
+            decodedText += reverseHuffmanCodes[codeBuffer];
+            codeBuffer.clear();
         }
     }
     return decodedText;
@@ -130,4 +125,16 @@ int main() {
     wofstream encodedFile("encoded.txt");
     encodedFile << encodedText;
     encodedFile.close();
+
+
+    map<wstring, wchar_t> reverseHuffmanCodes;
+    for (const auto& pair: huffmanCodes) {
+        reverseHuffmanCodes[pair.second] = pair.first;
+    }
+
+    wstring decodedText = decodeText(encodedText, reverseHuffmanCodes);
+
+    wofstream decodedFile("decoded.txt");
+    decodedFile << decodedText;
+    decodedFile.close();
 }
