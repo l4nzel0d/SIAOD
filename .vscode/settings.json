@@ -64,6 +64,9 @@
     "ostream": "cpp",
     "iostream": "cpp",
     "cstdint": "cpp",
-    "limits": "cpp"
+    "limits": "cpp",
+    "iosfwd": "cpp",
+    "*.tcc": "cpp",
+    "ios": "cpp"
   }
 }
