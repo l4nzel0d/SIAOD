@@ -118,13 +118,12 @@ int main() {
     string inputText;
     ifstream inputFile("input.txt");
 
-    if (inputFile.is_open()) {
-        getline(inputFile, inputText, '\0');
-        inputFile.close();
-    } else {
+    if (!inputFile.is_open()) {
         cout << "Error openning file." << endl;
         return 1;
     }
+    getline(inputFile, inputText, '\0');
+    inputFile.close();
 
     map<char, int> frequencyMap;
     for (char ch : inputText) {
@@ -158,7 +157,6 @@ int main() {
 
     string readEncodedText = readBinaryFile("encoded.bin");
     string decodedText = decodeText(encodedText, decodingMap);
-
     ofstream decodedFile("decoded.txt");
     decodedFile << decodedText;
     decodedFile.close();
