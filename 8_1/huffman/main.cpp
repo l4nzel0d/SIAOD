@@ -137,4 +137,10 @@ int main() {
     wofstream decodedFile("decoded.txt");
     decodedFile << decodedText;
     decodedFile.close();
+
+    size_t originalSize = inputText.length() * 8;
+    size_t compressedSize = encodedText.length();
+    cout << "Original size: " << originalSize << " bytes" << endl;
+    cout << "Compressed size: " << compressedSize << " bytes" << endl;
+    cout << "Compression ratio: " << static_cast<double>(originalSize) / compressedSize << endl;
 }

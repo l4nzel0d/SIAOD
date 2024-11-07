@@ -115,6 +115,7 @@ double calculateCompressionRatio(const string& inputFilename, const string& enco
 }
 
 int main() {
+    setlocale(LC_ALL, "ru_RU.UTF-8");
     string inputText;
     ifstream inputFile("input.txt");
 
@@ -161,6 +162,8 @@ int main() {
     decodedFile << decodedText;
     decodedFile.close();
 
+    cout << "Original size: " << getFileSize("input.txt") << " bytes" << endl;
+    cout << "Compressed size: " << getFileSize("encoded.bin") << " bytes" << endl;
     double compressionRatio = calculateCompressionRatio("input.txt", "encoded.bin");
     cout << "Compression ratio: " << compressionRatio << endl;
     return 0;
