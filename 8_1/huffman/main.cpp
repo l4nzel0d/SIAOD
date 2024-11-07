@@ -4,6 +4,7 @@
 #include <vector>
 #include <fstream>
 #include <locale>
+#include <cmath>
 
 using namespace std;
 
@@ -89,6 +90,36 @@ wstring decodeText(const wstring& encodedText, map<wstring, wchar_t>& reverseHuf
     return decodedText;
 }
 
+double calculateAverageCodeLength(const map<wchar_t, wstring>& huffmanCodes, const map<wchar_t, int>& frequencyMap, int totalSymbols) {
+    double sumCodeLengths = 0.0;
+
+    for (const auto& pair : huffmanCodes) {
+        wchar_t symbol = pair.first;
+        int codeLength = pair.second.length();
+        int frequency = frequencyMap.at(symbol);
+
+        sumCodeLengths += codeLength * frequency;
+    }
+
+    return sumCodeLengths / totalSymbols;
+}
+
+double calculateVariance(const map<wchar_t, wstring>& huffmanCodes, const map<wchar_t, int>& frequencyMap, int totalSymbols, double averageLength) {
+    double squaredDifferenceSum = 0.0;
+
+    for (const auto& pair : huffmanCodes) {
+        wchar_t symbol = pair.first;
+        int codeLength = pair.second.length();
+        int frequency = frequencyMap.at(symbol);
+
+        double difference = codeLength - averageLength;
+        squaredDifferenceSum += frequency * pow(difference, 2);
+    }
+
+    return squaredDifferenceSum / totalSymbols;
+}
+
+
 int main() {
     setlocale(LC_ALL, "ru_RU.UTF-8");
 
@@ -137,6 +168,20 @@ int main() {
     wofstream decodedFile("decoded.txt");
     decodedFile << decodedText;
     decodedFile.close();
+
+
+    map<wchar_t, int> frequencyMap;
+    for (wchar_t ch : inputText) {
+        frequencyMap[ch]++;
+    }
+
+    int totalSymbols = inputText.length();
+
+    double averageCodeLength = calculateAverageCodeLength(huffmanCodes, frequencyMap, totalSymbols);
+    cout << "Average code length: " << averageCodeLength << endl;
+
+    double variance = calculateVariance(huffmanCodes, frequencyMap, totalSymbols, averageCodeLength);
+    cout << "Variance: " << variance << endl;
 
     size_t originalSize = inputText.length() * 8;
     size_t compressedSize = encodedText.length();
