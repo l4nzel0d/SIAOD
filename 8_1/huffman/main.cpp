@@ -137,19 +137,19 @@ int main() {
 
     map<wchar_t, wstring> huffmanCodes = buildHuffmanTree(inputText);
 
-    wcout << L"Huffman codes for each symbol:\n";
-    for (auto pair : huffmanCodes) {
-        wstring characterRepresentation;
+    // wcout << L"Huffman codes for each symbol:\n";
+    // for (auto pair : huffmanCodes) {
+    //     wstring characterRepresentation;
 
-        if (pair.first == L'\n') {
-            characterRepresentation = L"\\n"; 
-        } else {
-            characterRepresentation = wstring(1, pair.first);  
-        }
+    //     if (pair.first == L'\n') {
+    //         characterRepresentation = L"\\n"; 
+    //     } else {
+    //         characterRepresentation = wstring(1, pair.first);  
+    //     }
 
-        // Выводим символ и его код
-        wcout << L"\'" << characterRepresentation << L"\': " << pair.second << endl;
-    }
+    //     // Выводим символ и его код
+    //     wcout << L"\'" << characterRepresentation << L"\': " << pair.second << endl;
+    // }
 
     wstring encodedText = encodeText(inputText, huffmanCodes);
 
@@ -188,4 +188,17 @@ int main() {
     cout << "Original size: " << originalSize << " bytes" << endl;
     cout << "Compressed size: " << compressedSize << " bytes" << endl;
     cout << "Compression ratio: " << static_cast<double>(originalSize) / compressedSize << endl;
+
+    wcout << L"Frequency of each character:\n";
+    for (const auto& pair : frequencyMap) {
+    wstring characterRepresentation;
+
+    if (pair.first == L'\n') {
+        characterRepresentation = L"\\n"; // Обозначение для символа новой строки
+    } else {
+        characterRepresentation = wstring(1, pair.first); // Символ
+    }
+
+    wcout << L"\'" << characterRepresentation << L"\': " << pair.second << endl;
+}
 }
